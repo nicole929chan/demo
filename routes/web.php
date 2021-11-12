@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,31 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('test', function () {
+
+    /** 範例 - 客戶端權限 */
+    $marketing = \App\Models\User::find(7);
+    $manager = \App\Models\User::find(3);
+    auth()->setUser($marketing);
+
+    if (Gate::allows('view-product')) {
+        return "<pre>true test page</pre>";
+    } else {
+        return "<pre>false test page</pre>";
+    }
+
+    if (Gate::allows('update-product')) {
+        return "<pre>true test page</pre>";
+    } else {
+        return "<pre>false test page</pre>";
+    }
+
+    if (Gate::allows('delete-product', '帶其他參數進去')) {
+        return "<pre>true test page</pre>";
+    } else {
+        return "<pre>false test page</pre>";
+    }
 });
