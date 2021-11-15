@@ -26,21 +26,38 @@ Route::get('test', function () {
     $manager = \App\Models\User::find(3);
     auth()->setUser($marketing);
 
-    if (Gate::allows('view-product')) {
-        return "<pre>true test page</pre>";
-    } else {
-        return "<pre>false test page</pre>";
-    }
+    // if (Gate::allows('view-product')) {
+    //     return "<pre>true test page</pre>";
+    // } else {
+    //     return "<pre>false test page</pre>";
+    // }
 
-    if (Gate::allows('update-product')) {
-        return "<pre>true test page</pre>";
-    } else {
-        return "<pre>false test page</pre>";
-    }
+    // if (Gate::allows('update-product')) {
+    //     return "<pre>true test page</pre>";
+    // } else {
+    //     return "<pre>false test page</pre>";
+    // }
 
-    if (Gate::allows('delete-product', '帶其他參數進去')) {
-        return "<pre>true test page</pre>";
-    } else {
-        return "<pre>false test page</pre>";
-    }
+    // if (Gate::allows('delete-product', '帶其他參數進去')) {
+    //     return "<pre>true test page</pre>";
+    // } else {
+    //     return "<pre>false test page</pre>";
+    // }
+
+    /** 範例 - 客戶端授予權限 */
+    // $marketing->givePermissionTo(
+    //     ['create-product','update-product']
+    // );
+    // 或以多個字串型態也可以
+    // $marketing->givePermissionTo('create-product','update-product');
+
+    /** 範例 - 客戶端撤銷權限 */
+    // $marketing->withdrawPermissionTo(['create-product']);
+    // 或以多個字串型態也可以
+    // $marketing->withdrawPermissionTo('create-product');
+
+    /** 範例 - 客戶端更新權限 */
+    $marketing->updatePermissions(['view-product', 'update-product']);
+
+    echo 'done';
 });
